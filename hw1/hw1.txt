@@ -1,0 +1,20 @@
+1. subset a b
+I used recursion to check if car of a exists in b. If so, check the next element of list a. If we reach the empty list (i.e. we looked through all elements of a and they all exist in b), then return true. Otherwise, return false. Recursion was the most straightforward way of solving this.
+
+2. equal_sets a b 
+A and b are equal iff a is a subset of b AND b is a subset of a so this function was straightforward. 
+
+3. set_union a b 
+I used recursion for this function. It works by first checking if the head of a exists in b. If so, ignore it and look at the remaining a set and compare to b again recursively. If it doesn't exist, concatenate the head to list b and compare the remaining set of a. If set a is empty, return set b, which is the union. 
+
+4. set_intersection a b
+This works by first splitting the list a into car and cdr. If the head car exists in b, then we will attach the recursive call of set_intersection of the cdr and b to this head. Otherwise, will only do the recursive call of cdr and b without any cons to car. Recursion made the most sense, so that's why I used it for this. 
+
+5. set_diff a b
+This function uses the List.filter function to get every element of a that is not an element of b, which essentially is the diff of the set
+
+6. computed_fixed_point eq f x
+According to the spec, a computed fixed point is "computed by calculating x, f x, f (f x), f (f (f x)), etc." This is recursive, and it's why I made this function recursive. The base case would be if (f x) is equal to x, then it will return x. If not, you perform a recursive call of f (f x)
+
+7. filter_reachable g
+For this function, I started off with trying a recursive solution, but this didn't get me anywhere, so I opted for using a different method. I realized that this function was a DG (directed graph) problem. To solve this, I needed to use the computed_fixed_point function. This function was used to find the nonterminals that were basically unreachable, and I used List.filter to find nonterminals that were unreachable and remove them from the entire set of grammars. The filtering would eventually take me to a set of rules that has the property of a fixed_point of the form f( f(( ... (x)))) = x, and this would happen even if an infinite cycle existed.  
