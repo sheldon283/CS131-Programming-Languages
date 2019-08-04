@@ -1,0 +1,35 @@
+The way I implemented make_matcher was largely based off the sample 
+solution that was provided. Several of my auxiliary functions were 
+based off the ones from that solution. There were two main helper 
+functions, make_list_matcher and make_given_matcher. These sought 
+to create matches based off whether the inputted rules was a given 
+rule, or a list of rules. After attempting the first rule, depending 
+on whether it works or not, it will do different things. If it works, 
+then the make_given_matcher will return the return value of the acceptor. 
+On the other hand, if that doesn't work, then the other remaining rules 
+would be tried. 
+
+Alternatively, with the other helper function, it will try every symbol
+one after the other. Nonterminal symbols would make it call the other 
+helper function recursively with the set of rules for that particular 
+nonterminal symbol. However, if it is a terminal symbol, the function 
+will attempt to match it. If it can't, then nothing will be returned. 
+The rest of the rule will then be passed on, and the process repeats 
+with it put into the acceptor.
+
+make_matcher has some inherent weaknesses. It will not work with grammars 
+that are already invalid. It will attempt to call the helper functions, 
+which would try to match either a single rule, or a set of them. 
+Every instantiation of a rule has to have a terminal on the left hand side.
+Otherwise, make_matcher would attempt to recursively call the matcher for the 
+nonterminal at the start forever, making it stuck and continue to recurse
+infinitely. This must also be the case for the right side as well; termination
+of the rule is necessary. For this happen, there has to be a symbol that is 
+terminal.
+
+However, with the time I had, I was unable to solve the make_parser function,
+so I do not have the info or knowledge necessary to do an analysis of it. 
+It would seem logical that make_parser uses many of the same features of 
+make_matcher, but I was unfortunately unable to port make_matcher into 
+make_parser. Therefore, I hope the above description of make_matcher is sufficient
+enough for this report. 
